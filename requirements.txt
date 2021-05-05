@@ -1,0 +1,11 @@
+pandas~=1.2.4
+requests~=2.25.1
+matplotlib~=3.4.1
+scikit-learn~=0.24.1
+wechatsogou~=4.5.4
+selenium~=3.141.0
+numpy~=1.20.2
+bs4~=0.0.1
+beautifulsoup4~=4.9.3
+pyecharts~=1.9.0
+future~=0.18.2
