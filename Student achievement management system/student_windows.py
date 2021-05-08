@@ -6,8 +6,8 @@ import os
 
 def student_windows(data):
     student_windows = tk.Tk()
-    student_windows.attributes("-alpha", 0.8)
-    student_windows.title('Student achievement management system')
+    student_windows.attributes("-alpha", 1)
+    student_windows.title('XXXXXXXX学校学生成绩管理系统')
     student_windows.geometry('1000x500')
     tip1 = tk.Label(student_windows, text=data[0], font=('Arial', 25)).place(x=100, y=50)
     tip2 = tk.Label(student_windows, text=data[1], font=('Arial', 25)).place(x=100, y=150)
@@ -31,8 +31,8 @@ def student_windows(data):
     style.configure("Treeview", font=(None, 15), rowheight=int(25))
     tree.column('1', width=100, anchor='sw')
     tree.column('2', width=100, anchor='sw')
-    tree.heading('1', text='Lesson')
-    tree.heading('2', text='Score')
+    tree.heading('1', text='课程')
+    tree.heading('2', text='成绩')
     tree.tag_configure('evenColor', background='red')
     for i in scores:
         if int(i[1]) < 60:
@@ -45,7 +45,7 @@ def student_windows(data):
         student_windows.destroy()
         os.system('python login_windows.py')
 
-    tk.Button(student_windows, text='Exit', font=('Arial', 15), command=lambda: back_index(student_windows)).place(
+    tk.Button(student_windows, text=' 退出', font=('Arial', 15), command=lambda: back_index(student_windows)).place(
         x=850, y=420)
 
     student_windows.mainloop()

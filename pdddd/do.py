@@ -1,29 +1,20 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2021/4/21 16:51
-# @Author  : 奥利波德
-# @FileName: do.py
-# @Software: PyCharm
-# @Blog    ：https://blog.csdn.net/qq_44265507
-import pandas as pd
+s = 'cb:d1:b9:b7:ca:e4:c8:eb:b7:a8:20:31:30:2e:31:d5:fd:ca:bd:b0:e6'
+s = s.replace(":", '')
 
-data = pd.read_csv("banklist.csv")
-a = "helolo aa"
-# print(a.split(" "))
-# print(data.head())
-# a = data['ST'].nunique()
-# a = data[(data['ST']) == 'CA']
-# ['Bank Name'].str.match('Bank')
-# print(a['Bank' in a['Bank Name'].str])
-# print(a[~a['Bank Name'].str.match('Bank')])
-# print(data[(data['Acquiring Institution'])=='State Bank of Texas'])
-# print(data[(data['CERT'])>20000].shape[0])
-# print(data[(data['Bank Name']).str.split])
-# print((data['Bank Name']).str.match("S.*"))
-# print((data['Bank Name']).str.match("^s*").count())
-count = 0
-for item in data['Bank Name']:
-    if 'Bank' not in item:
-        count = count +1
-print(count)
-# print(data['Acquiring Institution'].value_counts()[0:5])
-# print(data['Bank Name'].value_counts()[0:5])
+
+def getmm(s):
+    s = "\\u" + s[2:]
+    s = s.encode('utf-8')
+    s = s.decode('unicode_escape')
+    return s
+
+
+for i in range(len(s)):
+    word = s[i:i + 4]
+    print(getmm("0x" + word),end='')
+    if i + 4 > len(s):
+        break
+    else:
+        i = i + 4
+
+getmm('0xcae4')

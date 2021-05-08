@@ -1,13 +1,12 @@
 import data_info as dao
+import hashlib
 
 
 def login(id, password, typeNumber):
     con, cursor = dao.getConn()
-    print(id, password, typeNumber)
     sql = "select * from user where user.id = ? and user.type = ?"
     cursor.execute(sql, (id, typeNumber))
     data = cursor.fetchone()
-    print(data)
     if str(type(data)) == "<class 'tuple'>":
         print(data)
         if data[3] == password:
@@ -15,6 +14,16 @@ def login(id, password, typeNumber):
         else:
             return 0, data
     return 0, data
+
+
+def find_user_by_id(id):
+    con, cursor = dao.getConn()
+    sql = 'select  * from user where id = ?'
+    cursor.execute(sql, (id,))
+    item = cursor.fetchall()
+    cursor.close()
+    con.close()
+    return item[0]
 
 
 def register(username, id, classname, password, type, lesson):
@@ -116,6 +125,12 @@ def delete_lesson(id, lesson):
     sql = "delete from teacher where id = ? and lesson = ?"
     cursor.execute(sql, (id, lesson))
     con.commit()
+    classname = find_user_by_id(id)[2]
+    students = find_students_by_classname(classname)
+    for student in students:
+        sql = 'delete from score where id = ? and lesson = ?'
+        cursor.execute(sql, (student[0], lesson))
+        con.commit()
     cursor.close()
     con.close()
 
@@ -129,16 +144,6 @@ def add_lesson(id, classname, lesson):
     con.commit()
     cursor.close()
     con.close()
-
-
-def find_user_by_id(id):
-    con, cursor = dao.getConn()
-    sql = 'select  * from user where id = ?'
-    cursor.execute(sql, id)
-    item = cursor.fetchall()
-    cursor.close()
-    con.close()
-    return item[0]
 
 
 def update_lesson(data):
@@ -165,7 +170,8 @@ def insert_new_lesson(lesson, classname):
     con, cursor = dao.getConn()
     sql = 'insert into score (id,lesson,score) values (?,?,?)'
     for i in students:
-        cursor.execute(sql, (i[1], lesson[0], '0'))
+        cursor.execute(sql, (i[0], lesson, '0'))
+        con.commit()
     cursor.close()
     con.commit()
     con.close()
@@ -186,6 +192,66 @@ def init_Student(lessons, id):
     for lesson in lessons:
         sql = 'insert into score(id,lesson,score) values (?,?,?)'
         cursor.execute(sql, (id, lesson[0], '0'))
+        con.commit()
     con.commit()
     cursor.close()
     con.close()
+
+
+def MD5_demo(str):
+    md = hashlib.md5()  # 创建md5对象
+    md.update(str.encode(encoding='utf - 8'))
+    return md.hexdigest()
+
+
+def find_all_students():
+    con, cursor = dao.getConn()
+    sql = 'select username,id,classname from user where type = 1'
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    con.close()
+    return data
+
+
+def fina_all_teacher_info():
+    con, cursor = dao.getConn()
+    sql = 'select * from teacher '
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    con.close()
+    return data
+
+
+def delete_teacher(id, lesson):
+    con, cursor = dao.getConn()
+    delete_lesson(id, lesson)
+    sql = ' delete from user where user.id = ? '
+    cursor.execute(sql, (id,))
+    con.commit()
+    cursor.close()
+    con.close()
+
+
+def find_like(like, value, type):
+    con, cursor = dao.getConn()
+    value = '%%%%%' + value + '%%%%'
+    if type == 1:
+        if like == 'username':
+            sql = " select id,username,classname from user where username like ? and type = 1"
+        else:
+            sql = " select id,username,classname from user where id like ? and type = 1"
+        cursor.execute(sql, (value,))
+    else:
+        if like == 'username':
+            sql = " select id,name,classname,lesson from teacher where name like ? "
+        else:
+            sql = " select id,name,classname,lesson from teacher where id like ? "
+        cursor.execute(sql, (value,))
+    students = cursor.fetchall()
+    cursor.close()
+    con.close()
+    return students
+
+

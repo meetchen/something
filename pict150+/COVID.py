@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2021/5/6 9:49
+# @Author  : 向生辉
+# @Software: PyCharm
+# @ClassName：自动化2006
+# @Student_id：0122011360613
 import time
 import json
 import requests

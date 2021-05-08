@@ -57,4 +57,6 @@ def closeCon(con, cursor):
 
 
 if __name__ == '__main__':
+    sqlite3.enable_callback_tracebacks(True)
+
     pass
