@@ -1,7 +1,6 @@
 import tkinter as tk
 import data_porcess as dao
 from tkinter import ttk
-import login_windows
 import os
 
 def student_windows(data):
@@ -16,11 +15,6 @@ def student_windows(data):
     style = ttk.Style()
 
     def fixed_map(option):
-        # Returns the style map for 'option' with any styles starting with
-        # ("!disabled", "!selected", ...) filtered out
-
-        # style.map() returns an empty list for missing options, so this should
-        # be future-safe
         return [elm for elm in style.map("Treeview", query_opt=option)
                 if elm[:2] != ("!disabled", "!selected")]
 
@@ -29,6 +23,7 @@ def student_windows(data):
               background=fixed_map("background"))
     tree = ttk.Treeview(student_windows, columns=['1', '2'], show='headings')
     style.configure("Treeview", font=(None, 15), rowheight=int(25))
+    # 表格
     tree.column('1', width=100, anchor='sw')
     tree.column('2', width=100, anchor='sw')
     tree.heading('1', text='课程')
@@ -51,5 +46,5 @@ def student_windows(data):
     student_windows.mainloop()
 
 
-if __name__ == '__main__':
-    student_windows(('张三', 123456, '高三（1）班'))
+# if __name__ == '__main__':
+#     student_windows(('张三', 123456, '高三（1）班'))

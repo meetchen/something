@@ -4,7 +4,6 @@ import data_porcess as dao
 import student_windows
 import teacher_windows
 import manager_windows
-from PIL import Image, ImageTk
 
 
 def login():
@@ -89,13 +88,7 @@ if __name__ == '__main__':
     windows.attributes("-alpha", 1)
     windows.title('XXXXXXXX学校学生成绩管理系统')
 
-    # 设置背景图片
-    # image_file = Image.open('30.jpg')
-    # photo = ImageTk.PhotoImage(image_file)
-    # canvas = tk.Canvas(windows, width=1200, height=700, bd=0, highlightthickness=0)
-    # canvas.create_image(700, 500, image=photo)
-    # canvas.pack()
-
+    # 尺寸
     windows.geometry('1000x500')
     # Label
     tip1 = tkinter.Label(windows, text='欢迎使用XXXX学校学生成绩管理系统', font=('Arial', 25)) \

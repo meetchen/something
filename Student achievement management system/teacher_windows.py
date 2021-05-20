@@ -16,7 +16,7 @@ def teacher_windows(data):
     tip4 = tk.Label(teacher_windows, text=data[3], font=('Arial', 25)).place(x=100, y=350)
     scores = dao.get_scores_by_lesson_and_classname(lesson=data[3], classname=data[1])
     style = ttk.Style()
-
+    # python3.7 内部错误 存在已知未修复BUG
     def fixed_map(option):
         return [elm for elm in style.map("Treeview", query_opt=option)
                 if elm[:2] != ("!disabled", "!selected")]
